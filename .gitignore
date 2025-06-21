@@ -2,5 +2,9 @@ data/
 example/
 .venv/
 .vscode/
+.DS_Store
+.ipynb_checkpoints
+__pycache__/
+
 get_spectra.ipynb
 qso.ipynb
