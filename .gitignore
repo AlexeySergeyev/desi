@@ -1,0 +1,6 @@
+data/
+example/
+.venv/
+.vscode/
+get_spectra.ipynb
+qso.ipynb
