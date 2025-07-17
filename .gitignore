@@ -1,4 +1,5 @@
 data/
+figs/
 example/
 .venv/
 .vscode/
@@ -8,3 +9,6 @@ __pycache__/
 
 get_spectra.ipynb
 qso.ipynb
+
+!data/merged_results.csv
+!data/E-INSPIRE+DESI.csv
