@@ -1,0 +1,29 @@
+2025-08-03 14:34:55,660 - INFO - ==================================================
+2025-08-03 14:34:55,662 - INFO - TESTING LOGGING SYSTEM
+2025-08-03 14:34:55,663 - INFO - ==================================================
+2025-08-03 14:34:55,663 - INFO - Log file: test_log_20250803_143455.log
+2025-08-03 14:34:55,664 - DEBUG - This is a DEBUG message - detailed information
+2025-08-03 14:34:55,664 - INFO - This is an INFO message - general information
+2025-08-03 14:34:55,664 - WARNING - This is a WARNING message - something unexpected
+2025-08-03 14:34:55,665 - ERROR - This is an ERROR message - serious problem
+2025-08-03 14:34:55,665 - INFO - Processing TARGETID 2842494018519054 at RA=30.412510, DEC=-1.216132
+2025-08-03 14:34:55,667 - INFO - Step 1: Checking FITS file...
+2025-08-03 14:34:55,667 - DEBUG - FITS file path: data/fits7411/i/2842494018519054_main_dark_17810_i.fits
+2025-08-03 14:34:55,667 - INFO - ✓ FITS file exists
+2025-08-03 14:34:55,667 - INFO - Step 2: Downloading Pan-STARRS data...
+2025-08-03 14:34:55,668 - DEBUG - Creating coordinate object
+2025-08-03 14:34:55,668 - INFO - ✓ Pan-STARRS data retrieved
+2025-08-03 14:34:55,669 - INFO - Step 3: Processing galaxy size...
+2025-08-03 14:34:55,669 - DEBUG - Background subtraction completed
+2025-08-03 14:34:55,669 - DEBUG - Galaxy finding algorithm running...
+2025-08-03 14:34:55,670 - INFO - ✓ Galaxy size processing completed
+2025-08-03 14:34:55,670 - WARNING - Simulated warning: Using default FWHM value
+2025-08-03 14:34:55,670 - ERROR - Simulated error: MGE fit failed on first attempt
+2025-08-03 14:34:55,671 - INFO - ✓ MGE fit succeeded on second attempt
+2025-08-03 14:34:55,671 - INFO - ==================================================
+2025-08-03 14:34:55,671 - INFO - PROCESSING SUMMARY
+2025-08-03 14:34:55,671 - INFO - ==================================================
+2025-08-03 14:34:55,672 - INFO - Total rows attempted: 1
+2025-08-03 14:34:55,672 - INFO - Successful results: 1
+2025-08-03 14:34:55,672 - INFO - Success rate: 100.0%
+2025-08-03 14:34:55,672 - INFO - Detailed log saved to: test_log_20250803_143455.log
