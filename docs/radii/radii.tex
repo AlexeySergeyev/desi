@@ -1,0 +1,262 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{hyperref}
+
+\begin{document}
+
+\section*{Analytical radii used in galaxy photometry}
+
+\subsection*{Surface-brightness models}
+
+\paragraph{Sérsic profile.}
+\[
+I(R)=I_e\,
+\exp\!\left\{-b_n\!\left[\left(\frac{R}{R_e}\right)^{1/n}-1\right]\right\},
+\]
+where $R_e$ is the (circularized) half-light (``effective'') radius and $b_n$ is defined by
+\[
+\Gamma(2n)=2\,\gamma\!\left(2n,\,b_n\right),
+\]
+with the commonly used approximation (accurate for $0.5\!\lesssim\! n\!\lesssim\!10$)
+\[
+b_n \simeq 2n-\frac{1}{3}+\frac{4}{405n}+\frac{46}{25515\,n^2}+\cdots .
+\]
+
+\paragraph{de~Vaucouleurs ($R^{1/4}$) profile (special case $n=4$).}
+\[
+I(R)=I_e\,
+\exp\!\left\{-b_4\!\left[\left(\frac{R}{R_e}\right)^{1/4}-1\right]\right\},\qquad
+b_4\simeq 7.669 .
+\]
+
+\paragraph{Exponential disc (special case $n=1$).}
+Written in scale-length form,
+\[
+I(R)=I_0\,\exp\!\left(-\frac{R}{h}\right),\qquad
+R_e = 1.678\,h .
+\]
+
+\subsection*{Petrosian radii (metric radii)}
+
+Let $\langle I\rangle(<R)\equiv \big[\pi R^2\big]^{-1}\!\int_0^R I(r)\,2\pi r\,dr$ be the mean intensity within $R$.
+The (``classical'') Petrosian index is
+\[
+\eta(R)\equiv \frac{I(R)}{\langle I\rangle(<R)}.
+\]
+The Petrosian radius $r_P$ is defined by $\eta(r_P)=\eta_0$ with a conventional choice $\eta_0=0.2$.
+Many pipelines (e.g.\ SDSS) use a slightly modified ratio,
+\[
+\mathcal{R}_P(r)\equiv
+\frac{\displaystyle \frac{1}{\pi(1.25^2-0.8^2)r^2}\int_{0.8r}^{1.25r} I(r')\,2\pi r'\,dr'}
+     {\displaystyle \frac{1}{\pi r^2}\int_{0}^{r}         I(r')\,2\pi r'\,dr'},
+\quad \mathcal{R}_P(r_P)=0.2 .
+\]
+Given $r_P$, the (circular) Petrosian flux is
+\[
+F_P \equiv \int_{0}^{N r_P} I(r)\,2\pi r\,dr,
+\]
+with $N=2$ in SDSS. The Petrosian50 and Petrosian90 radii are then
+\[
+r_{P50}:\quad \int_{0}^{r_{P50}}\! I\,2\pi r\,dr = 0.5\,F_P,\qquad
+r_{P90}:\quad \int_{0}^{r_{P90}}\! I\,2\pi r\,dr = 0.9\,F_P.
+\]
+
+\subsection*{Kron radius (adaptive first-moment aperture)}
+Define the intensity-weighted first radial moment (computed over some domain $0\le r\le R_{\max}$ such as an isophotal region)
+\[
+r_1 \equiv
+\frac{\displaystyle \int_0^{R_{\max}} I(r)\, r\, 2\pi r\,dr}
+     {\displaystyle \int_0^{R_{\max}} I(r)\,     2\pi r\,dr}
+=\frac{\displaystyle \int_0^{R_{\max}} I(r)\, 2\pi r^2\,dr}
+      {\displaystyle \int_0^{R_{\max}} I(r)\, 2\pi r  \,dr}.
+\]
+The Kron aperture radius is $R_K \equiv k\,r_1$, with $k\simeq 2$-$2.5$ in practice (e.g.\ SExtractor uses $k=2.5$ plus a minimum aperture).
+
+\section*{Comparisons without PSF convolution (intrinsic profiles)}
+
+For a Sérsic profile, the enclosed-light fraction is
+\[
+\frac{L(<R)}{L_{\rm tot}}
+= \frac{\gamma\!\left(2n,\, b_n \left(\frac{R}{R_e}\right)^{1/n}\right)}{\Gamma(2n)}.
+\]
+Thus $R_f/R_e$ is given by solving $\gamma\!\left(2n,\, b_n (R_f/R_e)^{1/n}\right)= f\,\Gamma(2n)$.
+
+\medskip
+Some useful numbers:
+\[
+\begin{array}{l|ccc}
+\text{Sérsic }n & R_{50}/R_e & R_{90}/R_e & \text{comment} \\
+\hline
+1\ (\text{exponential}) & 1.000 & 2.318 & R_e=1.678\,h \\
+2                        & 1.000 & 3.310 & \\
+4\ (\text{de Vauc.})    & 1.000 & 5.549 & \\
+\end{array}
+\]
+For ``classical'' Petrosian with $\eta_0=0.2$ (using the definition $\eta=I/\langle I\rangle$):
+\[
+\begin{array}{l|ccc}
+\text{Sérsic }n & r_P/R_e & F(<2r_P)/F_{\rm tot} & \\
+\hline
+1 & 2.16 & 0.994 & \\
+2 & 2.20 & 0.948 & \\
+4 & 1.82 & 0.829 & \\
+\end{array}
+\]
+(Exact values for SDSS’s annular definition differ slightly but follow the same trend with $n$.)
+
+Kron apertures recover an $n$-dependent fraction of the total light. For ideal (untruncated) profiles, $2\,r_1$-$2.5\,r_1$ typically encloses $\gtrsim90\%$ of the flux for discs and less for high-$n$ spheroids if the moment is truncated at small $R_{\max}$.
+
+\section*{Including PSF convolution}
+
+Let $P$ be the PSF and $(I\ast P)(R)$ the observed profile.
+
+\subsection*{Case (i): Galaxy $\gg$ PSF (e.g.\ $R_e/\mathrm{FWHM}\gtrsim 3$)}
+Convolution alters sizes and concentrations only weakly:
+\[
+R_{e,\mathrm{obs}} \approx R_e\quad\text{and}\quad
+(n_{\mathrm{obs}}\ \text{slightly lower than intrinsic for high }n).
+\]
+Nonparametric sizes (e.g.\ $r_{P50}, r_{P90}$) and concentration $C$ incur small biases; for $R_e/\mathrm{FWHM}\gtrsim 3$ these are typically at the few-percent level.
+
+\subsection*{Case (ii): Galaxy $\sim$ PSF (e.g.\ $R_e\!\sim\!\mathrm{FWHM}\!\approx\!1''$)}
+PSF smoothing reduces central contrast, driving \emph{nonparametric} radii and concentrations toward those of the PSF and lowering $n_{\mathrm{obs}}$. Biases become significant:
+\[
+r_{P50,\mathrm{obs}}\!\uparrow,\quad r_{P90,\mathrm{obs}}\!\downarrow\ \text{relative to intrinsic},
+\quad C\equiv 5\log_{10}\!\frac{R_{80}}{R_{20}}\ \text{is underestimated}.
+\]
+Sérsic fits yield $R_{e,\mathrm{obs}}>R_e$ and $n_{\mathrm{obs}}<n$, with the bias increasing as $R_e/\mathrm{FWHM}$ decreases.
+
+\subsection*{Case (iii): PSF-limited (galaxy $\ll$ PSF)}
+If both galaxy and PSF are well described by circular Gaussians with dispersion $\sigma_{\rm psf}$:
+\[
+\text{Gaussian:}\quad R_{e,\mathrm{psf}}=\sqrt{2\ln2}\,\sigma_{\rm psf}\simeq 0.5\,\mathrm{FWHM}.
+\]
+For a Gaussian surface-brightness profile the following \emph{exact} PSF-limited relations hold:
+\[
+r_{P}(\eta{=}0.2)\simeq 0.98\,\mathrm{FWHM},\quad
+r_{P50}\simeq 0.50\,\mathrm{FWHM},\quad
+r_{P90}\simeq 0.91\,\mathrm{FWHM}.
+\]
+For a Gaussian \emph{galaxy} convolved with a Gaussian PSF,
+\[
+R_{e,\mathrm{obs}}^2 = R_e^2 + (0.5\,\mathrm{FWHM})^2 \quad \text{(exact)}.
+\]
+For non-Gaussian galaxies (e.g.\ exponential, de~Vaucouleurs),
+a practical approximation is a quadrature-like combination
+\[
+R_{e,\mathrm{obs}} \simeq \Big(R_e^{\,p} + \alpha(n)^{\,p}\,\mathrm{FWHM}^{\,p}\Big)^{1/p},
+\]
+with $p\approx 1.5$-$2$ and $\alpha(n)\sim 0.4$-$0.6$ a slowly varying function of $n$; the precise correction should be calibrated for the survey’s PSF.
+
+\section*{Impact of image (pixel) scale}
+Let $s$ be the pixel scale (arcsec/pixel).
+\begin{itemize}
+\item \textbf{Sampling.} If $\mathrm{FWHM}/s \lesssim 2$ (undersampling), the PSF core is poorly sampled and size measurements (Petrosian/Kron and $R_e$) are biased; an oversampled PSF model partly mitigates this but residuals remain. Dithered imaging and finer $s$ reduce biases.
+\item \textbf{Discretization.} Nonparametric indices (Petrosian, $r_{P50}$/$r_{P90}$) are computed on a radial grid; coarse $\Delta r\!\approx\!s$ introduces quantization and bias in $\eta(R)$ unless small aperture steps are used. Kron’s $r_1$ is likewise sensitive to segmentation depth and the adopted pixel mask.
+\item \textbf{Practical rule of thumb.} Reliable radii generally require $R_e \gtrsim (2$-$3)\,s$ and $\mathrm{FWHM}/s \gtrsim 2$-$3$ (Nyquist-plus sampling). Below these, measurements trend to the PSF-limited values above, and concentration becomes PSF-dominated.
+\end{itemize}
+
+\section*{Notes on usage}
+\begin{itemize}
+\item When quoting Petrosian metrics, specify the definition ($\eta$ vs.\ SDSS annular $\mathcal{R}_P$) and the aperture multiplier $N$ used for $F_P$ (SDSS: $N{=}2$).
+\item Kron radii depend on $R_{\max}$ (depth/segmentation); $k=2.5$ is common, with a minimum aperture to avoid pathological values for compact sources.
+\end{itemize}
+
+
+\section*{Survey-specific PSF \& sampling assumed}
+We adopt typical values for each survey’s working band:
+\[
+\begin{array}{lcl}
+\text{SDSS }r: & \mathrm{FWHM}=1.3'' ,\quad s=0.396''/\mathrm{pix} \\
+\text{Pan-STARRS1 }r_\mathrm{P1}: & \mathrm{FWHM}\simeq 1.0'' ,\quad s=0.258''/\mathrm{pix} \\
+\text{KiDS }r: & \mathrm{FWHM}\simeq 0.72'' ,\quad s=0.214''/\mathrm{pix} \\
+\text{Euclid VIS}: & \mathrm{FWHM}\simeq 0.17'' ,\quad s=0.101''/\mathrm{pix} \\
+\end{array}
+\]
+
+\section*{How the numbers were computed (brief)}
+For each Sérsic index $n\in\{1,2,4\}$ and for three size regimes $R_e/\mathrm{FWHM}\in\{0.5,\,1,\,3\}$:
+\begin{enumerate}
+\item We rendered a noiseless 2D Sérsic galaxy ($I\!\propto\!\exp\{-b_n[(R/R_e)^{1/n}-1]\}$) on a fine grid and (when applicable) convolved it with a circular Gaussian PSF of the survey’s FWHM.
+\item Circular profiles were measured in annuli with step $\mathrm{d}r=\min(\text{fine pixel},\, s/2)$ to include a realistic pixel-sampling effect.
+\item We extracted: nonparametric half–light radius $R_{50}$; classical Petrosian radius $r_P$ at $\eta=I/\langle I\rangle=0.2$; Petrosian50/90 within $2\,r_P$; and the Kron first–moment radius $r_1$ with $R_K=2.5\,r_1$ and its enclosed–flux fraction.
+\item Bias is quoted relative to the intrinsic (no–PSF) value measured on the same fine grid.
+\end{enumerate}
+
+\section*{Key results (galaxy comparable to the PSF: $R_e=\mathrm{FWHM}$)}
+Absolute “observed” radii appear smaller for sharper surveys because $R_e$ was tied to \emph{each} survey’s FWHM in this regime. The bias columns are the transferable quantities.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Half–light radius $R_{50}$ when $R_e=\mathrm{FWHM}$. Bias $=\,(R_{50,\mathrm{obs}}-R_{50,\mathrm{intr}})/R_{50,\mathrm{intr}}$.}
+\begin{tabular}{lcccc}
+\hline
+Survey & $n$ & $R_{50,\mathrm{obs}}$ [arcsec] & Bias \\
+\hline
+SDSS $r$ & 1 & 1.467 & $+14.4\%$ \\
+         & 2 & 1.471 & $+17.0\%$ \\
+         & 4 & 1.246 & $+34.0\%$ \\
+Pan-STARRS1 $r$ & 1 & 1.129 & $+14.4\%$ \\
+                 & 2 & 1.131 & $+17.1\%$ \\
+                 & 4 & 0.957 & $+33.9\%$ \\
+KiDS $r$ & 1 & 0.812 & $+14.3\%$ \\
+         & 2 & 0.814 & $+17.0\%$ \\
+         & 4 & 0.689 & $+33.9\%$ \\
+Euclid VIS & 1 & 0.192 & $+14.4\%$ \\
+           & 2 & 0.192 & $+17.0\%$ \\
+           & 4 & 0.163 & $+34.0\%$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\small
+\caption{Petrosian50 (within $2\,r_P$) when $R_e=\mathrm{FWHM}$.}
+\begin{tabular}{lcccc}
+\hline
+Survey & $n$ & $r_{P50,\mathrm{obs}}$ [arcsec] & Bias \\
+\hline
+SDSS $r$ & 1 & 1.463 & $+14.7\%$ \\
+         & 2 & 1.435 & $+19.7\%$ \\
+         & 4 & 1.126 & $+59.2\%$ \\
+Pan-STARRS1 $r$ & 1 & 1.125 & $+14.7\%$ \\
+                 & 2 & 1.104 & $+19.7\%$ \\
+                 & 4 & 0.866 & $+59.2\%$ \\
+KiDS $r$ & 1 & 0.810 & $+14.6\%$ \\
+         & 2 & 0.794 & $+19.7\%$ \\
+         & 4 & 0.624 & $+59.8\%$ \\
+Euclid VIS & 1 & 0.191 & $+14.7\%$ \\
+           & 2 & 0.188 & $+19.7\%$ \\
+           & 4 & 0.147 & $+59.2\%$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Kron aperture fraction (with $R_K=2.5\,r_1$).}
+For $R_e=\mathrm{FWHM}$ the enclosed fraction is nearly survey–independent: for $n=1,2,4$ we find $\simeq 0.969,\,0.937,\,0.910$ of the total, with small positive biases of $\sim 1\%$, $1.6\%$, and $2.9\%$ respectively (PSF makes $r_1$ slightly larger, so $R_K$ grows and captures a bit more light).
+
+\section*{Other regimes (same methodology)}
+\begin{itemize}
+\item \textbf{Galaxy $\gg$ PSF} ($R_e=3\,\mathrm{FWHM}$): biases are small. For $R_{50}$, $\Delta\simeq+1.7\%$ ($n{=}1$) and $+2.6\%$ ($n{=}4$). For Petrosian50, $+1.7\%$ ($n{=}1$) and $+4.4\%$ ($n{=}4$).
+\item \textbf{PSF–limited} ($R_e=0.5\,\mathrm{FWHM}$): sizes are PSF–dominated. $R_{50}$ biases climb to $\sim+49\%$ ($n{=}1$) and $\sim+215\%$ ($n{=}4$). Petrosian50 exhibits even larger relative biases for high–$n$ profiles (because the intrinsic $r_P$ and enclosed fractions shrink rapidly).
+\end{itemize}
+
+\section*{Impact of pixel scale (sampling)}
+The annular step was tied to the pixel scale ($\mathrm{d}r\simeq s/2$) to reflect discretization. Holding the PSF fixed ($R_e=\mathrm{FWHM}$, $n{=}4$), measuring $R_{50}$ with fine annuli vs.\ pixel–scale annuli gives:
+\[
+\begin{array}{lcl}
+\text{SDSS }r: & R_{50,\mathrm{fine}}=1.254'',\ R_{50,\mathrm{pix}}=1.168'' \Rightarrow \text{sampling bias}\approx -6.9\%\\
+\text{Euclid VIS}: & R_{50,\mathrm{fine}}=0.164'',\ R_{50,\mathrm{pix}}=0.142'' \Rightarrow \text{sampling bias}\approx -13.4\% 
+\end{array}
+\]
+Undersampling therefore \emph{adds} a non-negligible discretization bias on top of PSF blurring, especially for compact/high–$n$ sources.
+
+\section*{Reproducibility}
+A full table for all surveys, $n\in\{1,2,4\}$, and $R_e/\mathrm{FWHM}\in\{0.5,1,3\}$ (covering $R_{50}$, $r_P$, Petrosian50/90, $r_1$, $R_K$, and $F(<R_K)$) is provided as CSV. A compact {\LaTeX} table for the $R_e=\mathrm{FWHM}$ case is also provided.
+
+\end{document}

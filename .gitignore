@@ -11,6 +11,7 @@ __pycache__/
 
 get_spectra.ipynb
 qso.ipynb
+**synctex.gz
 
 !data/merged_results.csv
 !data/E-INSPIRE+DESI.csv
