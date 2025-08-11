@@ -1,6 +1,8 @@
 data/
 figs/
 example/
+temp/
+logs/
 .venv/
 .vscode/
 .DS_Store
@@ -13,3 +15,4 @@ qso.ipynb
 !data/merged_results.csv
 !data/E-INSPIRE+DESI.csv
 !data/UCMGS_Sigma_10.5_Vdisp_130_Mstar_E10_SFR_50_NoBalmer_age_5.csv
+!data/e-inspire2
